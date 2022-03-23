@@ -1,21 +1,22 @@
-var Ball;
+var ball, position;
 var database;
-var position;
 
 
 function setup(){
-  //initialize
+  //initialize the database
   database = firebase.database();
 
   createCanvas(500,500);
 
-  Ball = createSprite(250,250,10,10);
-  Ball.shapeColor = "red";
+  ball = createSprite(250,250,10,10);
+  ball.shapeColor = "red";
 
   //read operation
 
-  //first step - go to the location in database
+  //Step 1: .ref() -> go to the location in database
   var ballLocation = database.ref("ball/position")
+  
+  //Step 2: read the value from database
   ballLocation.on("value", readPosition)
 
 
@@ -41,15 +42,11 @@ function draw(){
 }
 
 function writePosition(x,y){
-  database.ref("ball/position").set({
-    x : Ball.x + x,
-    y : Ball.y + y
-  })
+  ball.x = ball.x + x
+  ball.y = ball.y + y
 }
 
-function readPosition(data){
-   position   =  data.val();
-   Ball.x = position.x
-   Ball.y = position.y
+function readPosition(){
+   
 }
 
